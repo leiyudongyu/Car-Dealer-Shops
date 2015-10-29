@@ -268,6 +268,26 @@ def disconnect():
         flash("You were not logged in")
         return redirect(url_for('showShops'))
 
+# JSON APIs to view Restaurant Information
+@app.route('/cardealershop/<int:carshop_id>/car/JSON')
+def carsOfCarShopJSON(carshop_id):
+    charshop = session.query(DealerShop).filter_by(id=carshop_id).one()
+    items = session.query(Cars).filter_by(
+        shop_id = carshop_id).all()
+    return jsonify(cars = [i.serialize for i in items])
+
+
+@app.route('/cardealershop/<int:carshop_id>/car/<int:car_id>/JSON')
+def carItemJSON(carshop_id, car_id):
+    Car_Item = session.query(Cars).filter_by(id = car_id).one()
+    return jsonify(Car_Item = Car_Item.serialize)
+
+
+@app.route('/cardealershop/JSON')
+def carShopsJSON():
+    carshops = session.query(DealerShop).all()
+    return jsonify(carshops=[r.serialize for r in carshops])
+
 @app.route('/')
 @app.route('/cardealershop/')
 def showShops():
@@ -312,7 +332,7 @@ def editCarShop(carshop_id):
     if 'username' not in login_session:
         return redirect('/login')
     if editedCarShop.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit this carshop. Please create your own carshop in order to edit.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedCarShop.name = request.form['name']
@@ -329,7 +349,7 @@ def deleteCarShop(carshop_id):
     if 'username' not in login_session:
         return redirect('/login')
     if carShopToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete this carshop. Please create your own carshop in order to delete.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(carShopToDelete)
         flash('%s Successfully Deleted' % carShopToDelete.name)
@@ -344,7 +364,7 @@ def newCar(carshop_id):
         return redirect('/login')
     carshop = session.query(DealerShop).filter_by(id=carshop_id).one()
     if login_session['user_id'] != carshop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add menu items to this restaurant. Please create your own restaurant in order to add items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to add car to this carshop. Please create your own carshop in order to add car.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         car = Cars(name=request.form['name'], description=request.form['description'], price=request.form['price'], course=request.form['course'], shop_id=carshop_id, user_id=carshop.user_id)
         session.add(car)
@@ -361,7 +381,7 @@ def editCar(carshop_id, car_id):
     editedCar = session.query(Cars).filter_by(id=car_id).one()
     carshop = session.query(DealerShop).filter_by(id=carshop_id).one()
     if login_session['user_id'] != carshop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit cars to this carshop. Please create your own carshop in order to edit cars.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedCar.name = request.form['name']
@@ -385,11 +405,11 @@ def deleteCar(carshop_id, car_id):
     carshop = session.query(DealerShop).filter_by(id=carshop_id).one()
     carToDelete = session.query(Cars).filter_by(id=car_id).one()
     if login_session['user_id'] != carshop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to delete menu items to this restaurant. Please create your own restaurant in order to delete items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete cars to this carshop. Please create your own carshop in order to delete cars.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(carToDelete)
         session.commit()
-        flash('Menu Item Successfully Deleted')
+        flash('Car Item Successfully Deleted')
         return redirect(url_for('showCars', carshop_id = carshop_id))
     else:
         return render_template('deleteCar.html', item = carToDelete)
