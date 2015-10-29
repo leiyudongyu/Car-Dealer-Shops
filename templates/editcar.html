@@ -1,0 +1,58 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+			<h1>Edit Car</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-1 padding-top">
+			<form action="{{url_for('editCar', carshop_id = carshop_id, car_id = car_id)}}" method = "post" id = 'abc'>
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<input type ="text" maxlength="100" class="form-control" name="name" value="{{item.name }}">
+
+					<label for="description">Description:</label>
+					<textarea class="form-control" maxlength="250" rows="3" name="description">{{item.description}}</textarea>
+
+					<label for="price">Price:</label>
+					<div class="input-group">
+						<div class="input-group-addon">$</div>
+						<input type ="text" maxlength="10" class="form-control" name="price" value="{{item.price}}">
+					</div>
+					<label for="course">Car Type:</label>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="course" id="course1" value="Sedan" {% if item.course == 'Sedan'%}checked{%endif%}>Sedan
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="course" id="course2" value="Coupe" {% if item.course == 'Coupe' %}checked{%endif%}>Coupe
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="course" id="course3" value="SUV" {% if item.course == 'SUV'%}checked{%endif%}>SUV
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input type="radio" name="course" id="course4" value="Van" {%if item.course =='Van'%}checked{%endif%}>Van
+					  </label>
+					</div>
+				</div>
+			</form>
+			<button class="btn btn-default" id="submit" type="submit" form = 'abc'>
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
+			<a href = "{{url_for('showCars', carshop_id = carshop_id)}}">
+				<button class="btn btn-default delete">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+			</a>
+		</div>
+	</div>
+{% endblock %}

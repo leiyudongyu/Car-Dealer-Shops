@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+			<h1>New Car Shop</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-1 padding-top">
+			<form action="{{url_for('newCarShop')}}" method = "POST" id = 'abc'>
+				<div class="form-group">
+				<label for="name" style = "color : white">Name:</label>
+				<input type ="text" class="form-control" maxlength="100" name="name">
+				<div class="padding-bottom"></div>
+				</div>
+			</form>
+			<button class="btn btn-default" id="submit" type="submit" form = 'abc'>
+			<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>Create</button>
+			<a href = "{{url_for('showShops')}}">
+				<button class="btn btn-default delete">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+			</a>
+		</div>
+	</div>
+{% endblock %}
