@@ -26,6 +26,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+# Show login page
 @app.route('/login')
 def showLogin():
     state = ''.join(
@@ -33,6 +34,7 @@ def showLogin():
     login_session['state'] = state
     # return "The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
+# google+ login
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
@@ -122,8 +124,6 @@ def gconnect():
     return output
 
 # User Helper Functions
-
-
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], picture=login_session['picture'])
@@ -146,7 +146,6 @@ def getUserID(email):
         return None
 
 # Google DISCONNECT - Revoke a current user's token and reset their login_session
-
 @app.route('/gdisconnect')
 def gdisconnect():
         # Only disconnect a connected user.
@@ -167,7 +166,7 @@ def gdisconnect():
         return response
 
 
-
+# Facebook login
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
     if request.args.get('state') != login_session['state']:
@@ -297,7 +296,7 @@ def showShops():
     else:
         return render_template('carshops.html', carshops = carshops)
 
-
+# Create new car shop
 @app.route('/cardealershop/new/', methods=['GET', 'POST'])
 def newCarShop():
     if 'username' not in login_session:
@@ -312,6 +311,7 @@ def newCarShop():
     else:
         return render_template('newCarShop.html')
 
+# Show cars for each car shop
 @app.route('/cardealershop/<int:carshop_id>/')
 @app.route('/cardealershop/<int:carshop_id>/car/')
 def showCars(carshop_id):
@@ -324,7 +324,7 @@ def showCars(carshop_id):
     else:
         return render_template('cars.html', items=items, carshop = carshop, creator=creator)
 
-
+# Manage car shop
 @app.route('/cardealershop/<int:carshop_id>/edit/', methods=['GET', 'POST'])
 def editCarShop(carshop_id):
     editedCarShop = session.query(
@@ -341,7 +341,7 @@ def editCarShop(carshop_id):
     else:
         return render_template('editCarShop.html', carshop = editedCarShop)
 
-
+# Delete car shop
 @app.route('/cardealershop/<int:carshop_id>/delete/', methods=['GET', 'POST'])
 def deleteCarShop(carshop_id):
     carShopToDelete = session.query(
@@ -358,6 +358,7 @@ def deleteCarShop(carshop_id):
     else:
         return render_template('deleteCarShop.html', carshop = carShopToDelete)
 
+# Create new Car
 @app.route('/cardealershop/<int:carshop_id>/menu/new/', methods=['GET', 'POST'])
 def newCar(carshop_id):
     if 'username' not in login_session:
@@ -374,6 +375,7 @@ def newCar(carshop_id):
     else:
         return render_template('newcars.html', carshop_id=carshop_id)
 
+# Edit car
 @app.route('/cardealershop/<int:carshop_id>/car/<int:car_id>/edit', methods=['GET', 'POST'])
 def editCar(carshop_id, car_id):
     if 'username' not in login_session:
@@ -398,6 +400,7 @@ def editCar(carshop_id, car_id):
     else:
         return render_template('editcar.html', carshop_id = carshop_id, car_id = car_id, item = editedCar)
 
+# Delete car
 @app.route('/cardealershop/<int:carshop_id>/car/<int:car_id>/delete', methods=['GET', 'POST'])
 def deleteCar(carshop_id, car_id):
     if 'username' not in login_session:
@@ -418,7 +421,7 @@ def deleteCar(carshop_id, car_id):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port = 5000)
 
 
 
