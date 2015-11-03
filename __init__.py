@@ -179,10 +179,9 @@ def fbconnect():
     access_token = request.data
     print "access token received %s " % access_token
 
-    app_id = json.loads(open(path + '/fb_client_secrets.json', 'r').read())[
-        'web']['app_id']
+    app_id = json.loads(open(r'/var/www/FlaskApp/FlaskApp/fb_client_secrets.json', 'r').read())['web']['app_id']
     app_secret = json.loads(
-        open(path + '/fb_client_secrets.json', 'r').read())['web']['app_secret']
+        open(r'/var/www/FlaskApp/FlaskApp/fb_client_secrets.json', 'r').read())['web']['app_secret']
     url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
         app_id, app_secret, access_token)
     h = httplib2.Http()
