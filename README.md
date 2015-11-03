@@ -3,8 +3,9 @@
 This is one of the web projects of Full Stack Web Developer Nanodegree in Udacity.
 
 In this project, I wrote sql scheme, built an web server using flask framwork of python and using SQLalchemy API to connect the sqlite database. I made a Restfull web application which can provide HTTP related CRUD methods handling a list of car shops and its cars. JSON APIs are also provided for data query. Then I implement third pary OAuth authentication for car shops and cars management. 
+You can find this project from http://52.32.104.91/
 
-- Skills: Google+ API, Facebook SDK, Restfull API SQLalchemy API, Sqlite Database, Python, Javascript, Ajax, HTML, CSS, Json
+- Skills: Google+ API, Facebook SDK, Restfull API SQLalchemy API, Sqlite Database, Python, Javascript, Ajax, HTML, CSS, Json Linux vm
 
 Features: <br/>
 1. Using Flask ( a light Python web framework).<br/>
@@ -13,8 +14,8 @@ Features: <br/>
 4. Providing JSON APIs, which you can exploit to get the information you want.<br/>
 
 How to run:<br/>
-1. Run database_setup.py to create restaurantmenu.db<br/>
-2. Run __init__.py to connect the sqlite database and webserver<br/>
+1. Run database_setup.py to create database<br/>
+2. Run __init__.py to connect the database and webserver<br/>
 3. Go to http://localhost:5000/ and you will see the page as below<br/>
 
 ![image](https://raw.githubusercontent.com/leiyudongyu/images/master/21.jpg)
