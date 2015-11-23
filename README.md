@@ -1,6 +1,6 @@
 # Car-Dealer-Shops
 
-This is one of the web projects of Full Stack Web Developer Nanodegree in Udacity.
+This is one of the web projects of Full Stack Web Developer Nanodegree in Udacity. 
 
 In this project, I wrote sql scheme, built an web server using flask framwork of python and using SQLalchemy API to connect the sqlite database. I made a Restfull web application which can provide HTTP related CRUD methods handling a list of car shops and its cars. JSON APIs are also provided for data query. Then I implement third pary OAuth authentication for car shops and cars management. <br/>
 You can find this project from http://52.32.166.8/
